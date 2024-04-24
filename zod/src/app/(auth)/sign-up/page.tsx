@@ -75,7 +75,7 @@ const page = () => {
         title: "Success",
         description: res.data.message,
       });
-      router.replace(`/verfify/${username}`);
+      router.replace(`/verify/${username}`);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message;
