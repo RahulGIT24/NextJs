@@ -59,7 +59,7 @@ const page = () => {
     setIsSwitchLoading(false);
 
     try {
-      const response = await axios.get<ApiResponse>("/api/get-messsages");
+      const response = await axios.get<ApiResponse>("/api/get-messages");
       setMessages(response.data.messages || []);
       if (refresh) {
         toast({
@@ -69,6 +69,9 @@ const page = () => {
       }
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
+      if(axiosError.response?.data.message === "No Messages Found"){
+        return;
+      }
       toast({
         title:"Error",
         description:axiosError.response?.data.message || "Error while refreshing messages",
@@ -76,7 +79,6 @@ const page = () => {
       })
     }finally{
       setIsLoading(false);
-      
     }
   }, [setIsLoading,setMessages]);
 
@@ -91,7 +93,7 @@ const page = () => {
   // handle switch change
   const handleSwitchChange = async()=>{
     try {
-      const response = await axios.post<ApiResponse>("/api/accept-messsages",{
+      const response = await axios.post<ApiResponse>("/api/accept-messages",{
         acceptMessages:!acceptMessages
       })
       setValue('acceptMessages',!acceptMessages)
@@ -103,10 +105,14 @@ const page = () => {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
         title:"Error",
-        description:axiosError.response?.data.message || "Error while refreshing messages",
+        description:axiosError.response?.data.message || "Error while changing",
         variant:"destructive"
       })
     }
+  }
+
+  if(!session || !session.user){
+    return <div></div>
   }
 
   const {username} = session?.user as User
@@ -119,10 +125,6 @@ const page = () => {
       title:"URL Copied",
       description:"Profile Url has been copied to clipboard"
     })
-  }
-
-  if(!session || !session.user){
-    return <div>Unauthorized Request</div>
   }
 
   return<div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
