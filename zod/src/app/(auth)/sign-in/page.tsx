@@ -43,6 +43,7 @@ const page = () => {
       password:data.password
     })
     if(result?.error){
+      console.log("Error")
       toast({
         title:"Login Failed",
         description:"Incorrect username or password",

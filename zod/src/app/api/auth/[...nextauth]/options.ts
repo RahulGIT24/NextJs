@@ -7,10 +7,9 @@ import UserModel from "@/model/User";
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
-            id: "domain-login",
-            name: "Domain Account",
+            id: "credentials",
+            name: "Credentials",
             credentials: {
-                username: { label: "Username", type: "text" },
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
