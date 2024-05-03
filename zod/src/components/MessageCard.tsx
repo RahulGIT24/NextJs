@@ -31,6 +31,7 @@ type MessageCardProp = {
 }
 
 const MessageCard = ({message,onMessageDelete}:MessageCardProp) => {
+  console.log(message)
     const {toast} = useToast()
     const handleDeleteConfirm = async()=>{
         try {
@@ -46,7 +47,7 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProp) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
+        <CardTitle>{message.content}</CardTitle>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive">
@@ -67,7 +68,6 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProp) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <CardDescription>Card Description</CardDescription>
       </CardHeader>
       <CardContent></CardContent>
     </Card>
